@@ -8,7 +8,8 @@ Array:
   - Use Treeset to reduce time complexity
   - Use HashMap to reduce time complexity
   
-Recursion:
+String:
+  - First convert into char[]
   - String traversal for left and right in substring
   - String partition
   - String converts to char[], then mentained the char count in HashSet/HashMap which helps to solve.

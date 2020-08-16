@@ -10,4 +10,5 @@ Array:
   
 Recursion:
   - String traversal for left and right in substring
-  - String Partition
+  - String partition
+  - String converts to char[], then mentained the char count in HashSet/HashMap which helps to solve.

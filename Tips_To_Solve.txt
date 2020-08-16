@@ -1,0 +1,13 @@
+# coding-handson
+Array:
+  - Use minus sign to flag the index.
+  - Use value which will represent index in same array.
+  - Replace array values to some unique value to simplify operation.
+  - Keep only values which is in range of 0 to N (size of array).
+  - Use sorting to reduce time complexity
+  - Use Treeset to reduce time complexity
+  - Use HashMap to reduce time complexity
+  
+Recursion:
+  - String traversal for left and right in substring
+  - String Partition

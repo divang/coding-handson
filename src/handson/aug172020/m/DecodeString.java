@@ -1,6 +1,8 @@
 package handson.aug172020.m;
 
 import java.util.ArrayList;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.Stack;
 
 public class DecodeString {
@@ -118,5 +120,92 @@ public class DecodeString {
 
 		}
 		return null;
+	}
+
+	public String decodeString1(String s) {
+		Deque<Character> queue = new LinkedList<>();
+		for (char c : s.toCharArray())
+			queue.offer(c);
+		return helper(queue);
+	}
+
+	public String helper(Deque<Character> queue) {
+		StringBuilder sb = new StringBuilder();
+		int num = 0;
+		while (!queue.isEmpty()) {
+			char c = queue.poll();
+			if (Character.isDigit(c)) {
+				num = num * 10 + c - '0';
+			} else if (c == '[') {
+				String sub = helper(queue);
+				for (int i = 0; i < num; i++)
+					sb.append(sub);
+				num = 0;
+			} else if (c == ']') {
+				break;
+			} else {
+				sb.append(c);
+			}
+		}
+		return sb.toString();
+	}
+
+	public String decodeString2(String s) {
+
+		if (s.length() == 0)
+			return "";
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
+			if (Character.isDigit(c)) {
+				int digit_begin = i;
+				while (s.charAt(i) != '[')
+					i++;
+				int num = Integer.valueOf(s.substring(digit_begin, i));
+				int count = 1;
+				int str_begin = i + 1;
+				i++;
+				while (count != 0) {
+					if (s.charAt(i) == '[')
+						count++;
+					else if (s.charAt(i) == ']')
+						count--;
+					i++;
+				}
+				i--;
+				String str = decodeString(s.substring(str_begin, i));
+				for (int j = 0; j < num; j++) {
+					sb.append(str);
+				}
+			} else {
+				sb.append(c);
+			}
+		}
+		return sb.toString();
+	}
+
+	private int pos = 0;
+	public String decodeString3(String s) {
+		StringBuilder sb = new StringBuilder();
+		String num = "";
+		for (int i = pos; i < s.length(); i++) {
+			if (s.charAt(i) != '[' && s.charAt(i) != ']'
+					&& !Character.isDigit(s.charAt(i))) {
+				sb.append(s.charAt(i));
+			} else if (Character.isDigit(s.charAt(i))) {
+				num += s.charAt(i);
+			} else if (s.charAt(i) == '[') {
+				pos = i + 1;
+				String next = decodeString(s);
+				for (int n = Integer.valueOf(num); n > 0; n--)
+					sb.append(next);
+				num = "";
+				i = pos;
+			} else if (s.charAt(i) == ']') {
+				pos = i;
+				return sb.toString();
+			}
+		}
+		return sb.toString();
 	}
 }

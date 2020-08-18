@@ -92,6 +92,12 @@ public class CriticalConnections {
 				lowestVertex[current] = Math.min(lowestVertex[current],
 						lowestVertex[neighbor]);
 
+				// All the neighbor should have on same low vertex count and
+				// that is nothing but the lowest discovered time in the cycle
+				// of those nodes. So if there is no cycle formation in
+				// neighbor, then it means, this neighbor have a higher lowest
+				// vertex count then current node. S it is a critical connection
+				// in a network.
 				if (lowestVertex[neighbor] > discoveredTime[current]) {
 					criticalConns.add(Arrays.asList(current, neighbor));
 				}

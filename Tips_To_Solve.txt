@@ -12,4 +12,6 @@ String:
   - First convert into char[]
   - String traversal for left and right in substring
   - String partition
-  - String converts to char[], then mentained the char count in HashSet/HashMap which helps to solve.
+  - String converts to char[], then maintained the char count in HashSet/HashMap which helps to solve.
+  - Replace all punctuation char => paragraph = paragraph.replaceAll("\\p{Punct}", " ");
+  - Replace in between extra space => paragraph = paragraph.replaceAll("( +)", " ");  

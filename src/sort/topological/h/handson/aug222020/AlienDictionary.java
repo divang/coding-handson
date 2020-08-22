@@ -1,4 +1,4 @@
-package string.h.handson.aug222020;
+package sort.topological.h.handson.aug222020;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -132,8 +132,6 @@ public class AlienDictionary {
 				}
 			}
 		}
-		System.out.println("Graph->" + graph);
-		System.out.println("nodeInBoundCount->" + nodeInBoundCount);
 		Queue<Character> bsf = new LinkedList<Character>();
 		// Build BSF for generating order
 		for (Character c : nodeInBoundCount.keySet()) {
@@ -142,7 +140,6 @@ public class AlienDictionary {
 				bsf.add(c);
 			}
 		}
-		System.out.println("BSF->" + bsf);
 		StringBuilder order = new StringBuilder();
 		while (!bsf.isEmpty()) {
 			char c = bsf.poll();
@@ -154,7 +151,6 @@ public class AlienDictionary {
 				}
 			}
 		}
-		System.out.println("nodeInBoundCount->" + nodeInBoundCount);
 		for (char c : nodeInBoundCount.keySet()) {
 			// Cycle dependency
 			if (nodeInBoundCount.get(c) > 0)

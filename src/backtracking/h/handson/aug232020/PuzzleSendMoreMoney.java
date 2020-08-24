@@ -10,11 +10,26 @@ public class PuzzleSendMoreMoney {
 
 	public static void main(String[] args) {
 		PuzzleSendMoreMoney money = new PuzzleSendMoreMoney();
-		List<HashMap<Character, Integer>> solutions = money.decrypt("SEND", "MORE", "MONEY");
+		// String[] words = {"SEND", "MORE"};
+
+		/*
+		 * ["LEET","CODE"] "POINT"
+		 */
+
+		String[] words = {"LEET", "IS", "TOO"};
+		String result = "FUNNY";
+		// List<HashMap<Character, Integer>> solutions = money.decrypt(words,
+		// "MONEY");
+
+		long sT = System.currentTimeMillis();
+		List<HashMap<Character, Integer>> solutions = money.decrypt(words, result);
 		// List<HashMap<Character, Integer>> solutions = money.decrypt("PM",
 		// "TP", "YT");
 		// List<HashMap<Character, Integer>> solutions = money.decrypt("M", "N",
 		// "O");
+
+		System.out.println("Execution time:" + (System.currentTimeMillis() - sT));
+
 		System.out.println(solutions);
 
 	}
@@ -26,24 +41,31 @@ public class PuzzleSendMoreMoney {
 	 * 
 	 * So try to apply all 0-9 digit to each character one by one.
 	 */
-	public List<HashMap<Character, Integer>> decrypt(String word1, String word2, String word3) {
+
+	public boolean isSolvable(String[] words, String result) {
+		List<HashMap<Character, Integer>> solutions = decrypt(words, result);
+		return solutions.size() > 0 ? true : false;
+	}
+
+	public List<HashMap<Character, Integer>> decrypt(String[] words, String result) {
 
 		Set<Character> chars = new HashSet<Character>();
 		HashMap<Character, Integer> charDigitMap = new HashMap<Character, Integer>();
 
-		fillChar(word1, chars);
-		fillChar(word2, chars);
-		fillChar(word3, chars);
+		for (String word : words) {
+			fillChar(word, chars);
+		}
+		fillChar(result, chars);
 		System.out.println("Characters->" + chars);
 		List<HashMap<Character, Integer>> solutions = new ArrayList<HashMap<Character, Integer>>();
-		backTrack(0, new ArrayList<Character>(chars), charDigitMap, word1, word2, word3, solutions);
+		backTrack(0, new ArrayList<Character>(chars), charDigitMap, words, result, solutions);
 		return solutions;
 	}
 
-	private void backTrack(int index, List<Character> chars, HashMap<Character, Integer> charDigitMap, String word1, String word2, String word3,
+	private void backTrack(int index, List<Character> chars, HashMap<Character, Integer> charDigitMap, String[] words, String result,
 			List<HashMap<Character, Integer>> solutions) {
 		if (charDigitMap.size() == chars.size()) {
-			validate(word1, word2, word3, charDigitMap, solutions);
+			validate(words, result, charDigitMap, solutions);
 			return;
 		}
 		if (index >= chars.size())
@@ -52,7 +74,9 @@ public class PuzzleSendMoreMoney {
 		for (int digit = 0; digit < 10; digit++) {
 			if (!charDigitMap.values().contains(digit)) {
 				charDigitMap.put(ch, digit);
-				backTrack(index + 1, chars, charDigitMap, word1, word2, word3, solutions);
+				backTrack(index + 1, chars, charDigitMap, words, result, solutions);
+				if (solutions.size() > 0)
+					return;
 				charDigitMap.remove(ch);
 			}
 		}
@@ -64,14 +88,17 @@ public class PuzzleSendMoreMoney {
 		}
 	}
 
-	private void validate(String word1, String word2, String word3, HashMap<Character, Integer> charDigitMap,
-			List<HashMap<Character, Integer>> solutions) {
-		if (leadingZeros(word1, charDigitMap) || leadingZeros(word2, charDigitMap) || leadingZeros(word3, charDigitMap))
-			return;
-		int n1 = wordToNumber(word1, charDigitMap);
-		int n2 = wordToNumber(word2, charDigitMap);
-		int n3 = wordToNumber(word3, charDigitMap);
-		if (n1 + n2 == n3) {
+	private void validate(String[] words, String result, HashMap<Character, Integer> charDigitMap, List<HashMap<Character, Integer>> solutions) {
+		for (String word : words) {
+			if (leadingZeros(word, charDigitMap))
+				return;
+		}
+		int sum = 0;
+		for (String word : words) {
+			sum += wordToNumber(word, charDigitMap);
+		}
+		int validateResult = wordToNumber(result, charDigitMap);
+		if (sum == validateResult) {
 			solutions.add(deepCopy(charDigitMap));
 		}
 	}

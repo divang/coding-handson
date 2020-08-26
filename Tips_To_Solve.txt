@@ -7,6 +7,7 @@ Array:
   - Use sorting to reduce time complexity
   - Use Treeset to reduce time complexity
   - Use HashMap to reduce time complexity
+  - Arrays.sort(logs, <implement Comparator>);
   
 String:
   - First convert into char[]

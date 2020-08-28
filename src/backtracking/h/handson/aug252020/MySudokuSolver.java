@@ -65,6 +65,9 @@ public class MySudokuSolver {
 					print(board);
 					backTrackFromLToRCellOrNextRowCell(row, col);
 					if (!found) { // back trace
+						// Looking for only one successful 8*8 cells.
+						// If it is not, then back track to the origin, means
+						// THE FRIST '.' and try new value and go forward track.
 						System.out.println("back track: " + row + "," + col + ",.");
 						board[row][col] = '.';
 					}
